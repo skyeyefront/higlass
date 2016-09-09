@@ -8,7 +8,6 @@ export function GenericTiledArea() {
 
     let xOrigScale = null, yOrigScale = null;
     let xScale = null, yScale = null, valueScale = null;
-    let widthScale = null;
     let domain = null;
     let scaleExtent = null;
     let horizontal = true;
@@ -21,10 +20,8 @@ export function GenericTiledArea() {
     let diagonal = false;
 
     let xAxis = null;
+    let minY = 0, minX = 0, maxY = 0, maxX = 0;
 
-    let labelSort = (a,b) => { return b.area - a.area; };
-    let gDataPoints = null;
-    let pointMarkId = (d) => { return `p-${d.uid}`; };
     function countTransform(count) {
         return Math.sqrt(Math.sqrt(count + 1));
         //return Math.log(count);
@@ -42,7 +39,6 @@ export function GenericTiledArea() {
             let xScaleDomain = null, yScaleDomain = null;
             let loadedTiles = {};
             let loadingTiles = {};
-            let shownTiles = new Set();
             let tileDirectory = d.source;
 
             let totalWidth = null;
@@ -95,10 +91,6 @@ export function GenericTiledArea() {
                     return false;
             }
 
-            function pointId(d) {
-                return d.uid;
-            }
-
             if ('resizeDispatch' in d) {
                 d.resizeDispatch.on('close.' + slugId, function(d) {
                     localZoomDispatch.on('zoom.' + slugId, null);
@@ -142,11 +134,6 @@ export function GenericTiledArea() {
                     tilesChanged(d, element);
                     draw();
                 }
-            }
-
-            function removeTile(tile) {
-                // remove all of the elements associated with this tile
-                //
             }
 
             function refreshTiles(currentTiles) {

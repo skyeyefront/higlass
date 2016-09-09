@@ -1,5 +1,4 @@
 import PIXI from 'pixi.js';
-import slugid from 'slugid';
 import d3 from 'd3';
 import {load1DTileData} from './TileData.js';
 
@@ -9,13 +8,7 @@ export function WigglePixiLine() {
     let resizeDispatch = null;
     let xScale = d3.scale.linear();
     let zoomDispatch = null;
-    let resolution = 256;
     let pixiStage = null;
-    var xPoints;
-    var yPoints;
-    var tileIDs;
-    var shownT = {};
-    var preScale = 1; 
     let zoomedXScale = d3.scale.linear();
 
     function tileId(tile) {
@@ -94,7 +87,6 @@ export function WigglePixiLine() {
             
             let zoomLevel = null;
             let drawTile = null;
-            let drawAxis = null;
             let allTiles = null;
 
             function redrawTile() {
@@ -107,9 +99,6 @@ export function WigglePixiLine() {
                     return;
 
                 zoomLevel = allTiles[0].tilePos[0];
-                let tileWidth = (allTiles[0].xRange[1] - allTiles[0].xRange[0]) / Math.pow(2, zoomLevel);
-                let minXRange = Math.min(...allTiles.map((x) => x.tileXRange[0]));
-                let maxXRange = Math.max(...allTiles.map((x) => x.tileXRange[1]));
 
                 let yScale = d3.scale.linear()
                 .domain([0, maxVisibleValue])
@@ -182,11 +171,8 @@ export function WigglePixiLine() {
                     let j = 0;
 
                     for (let i = 0; i < tileData.length; i++) {
-
-
                         let xPos = zoomedXScale(tileXScale(i));
-                        let height = yScale(tileData[i])
-                        let width = zoomedXScale(tileXScale(i+1)) - zoomedXScale(tileXScale(i));
+                        let height = yScale(tileData[i]);
 
                        // if (height > 0 && width > 0) {
                          //   graphics.drawRect(xPos, yPos, width, height);
@@ -199,7 +185,7 @@ export function WigglePixiLine() {
                         }
                         graphics.lineTo(zoomedXScale(tileXScale(i+1)), d.height - d.height*yScale(tileData[i+1]));
                     }
-                }
+                };
 
                 let shownTiles = {};
 
@@ -272,11 +258,11 @@ export function WigglePixiLine() {
                 zoomedXScale.range(xScale.range());
                 zoomedXScale.domain(xScale.range()
                                           .map(function(x) { return (x - translate[0]) / scale })
-                                          .map(xScale.invert))
+                                          .map(xScale.invert));
 
                 if (drawTile != null) {
                     for (let i = 0; i < allTiles.length; i++) {
-                        let tileGraphics = d.tileGraphics[allTiles[i].tileId]
+                        let tileGraphics = d.tileGraphics[allTiles[i].tileId];
                         drawTile(tileGraphics, allTiles[i], zoomedXScale);
                     }
                 }
@@ -284,43 +270,43 @@ export function WigglePixiLine() {
 
             sizeChanged();
         });
-    }
+    };
 
     chart.width = function(_) {
         if (!arguments.length) return width;
         else width = _;
         return chart;
-    }
+    };
 
     chart.height = function(_) {
         if (!arguments.length) return height;
         else height = _;
         return chart;
-    }
+    };
 
     chart.resizeDispatch = function(_) {
         if (!arguments.length) return resizeDispatch;
         else resizeDispatch = _;
         return chart;
-    }
+    };
 
     chart.xScale = function(_) {
         if (!arguments.length) return xScale;
         else xScale = _;
         return chart;
-    }
+    };
 
     chart.zoomDispatch = function(_) {
         if (!arguments.length) return zoomDispatch;
         else zoomDispatch = _;
         return chart;
-    }
+    };
 
     chart.pixiStage = function(_) {
         if (!arguments.length) return pixiStage;
         else pixiStage = _;
         return chart;
-    }
+    };
 
     return chart;
 }

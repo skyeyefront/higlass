@@ -1,5 +1,4 @@
 import PIXI from 'pixi.js';
-import slugid from 'slugid';
 import d3 from 'd3';
 import {load1DTileData} from './TileData.js';
 
@@ -10,7 +9,6 @@ export function WigglePixiTrack() {
     let xScale = d3.scale.linear();
     let zoomedXScale = d3.scale.linear();
     let zoomDispatch = null;
-    let resolution = 256;
     let pixiStage = null;
     let inD = 0;
 
@@ -66,12 +64,9 @@ export function WigglePixiTrack() {
 
             let zoomLevel = null;
             let localXScale = null;
-            let prevTranslate = null;
-            let prevScale = null;
-                
+
             function redrawTile() {
                 let tileData = d3.select(this).selectAll('.tile-g').data();
-                let minVisibleValue = Math.min(...tileData.map((x) => x.valueRange[0]));
                 let maxVisibleValue = Math.max(...tileData.map((x) => x.valueRange[1]));
 
                 if (tileData.length == 0)
@@ -80,7 +75,6 @@ export function WigglePixiTrack() {
                 zoomLevel = tileData[0].tilePos[0];
                 let tileWidth = (tileData[0].xRange[1] - tileData[0].xRange[0]) / Math.pow(2, zoomLevel);
                 let minXRange = Math.min(...tileData.map((x) => x.tileXRange[0]));
-                let maxXRange = Math.max(...tileData.map((x) => x.tileXRange[1]));
 
                 localXScale = d3.scale.linear()
                     .range([0, width])
@@ -113,7 +107,7 @@ export function WigglePixiTrack() {
                         let xPos = localXScale(tileXScale(i));
                         //let yPos = -(d.height - yScale(tileData[i]));
                         let yPos = -1; //-(d.height - yScale(tileData[i]));
-                        let height = yScale(tileData[i])
+                        let height = yScale(tileData[i]);
                         let width = localXScale(tileXScale(i+1)) - localXScale(tileXScale(i));
 
                         if (height > 0 && width > 0) {
@@ -121,7 +115,7 @@ export function WigglePixiTrack() {
                         }
                     }
 
-                }
+                };
 
                 let shownTiles = {};
 
@@ -148,7 +142,7 @@ export function WigglePixiTrack() {
                         // so we need to create one
                          let newGraphics = new PIXI.Graphics();
                          drawTile(newGraphics, tileData[i]);
-                         d.pMain.addChild(newGraphics)
+                         d.pMain.addChild(newGraphics);
                          d.tileGraphics[tileData[i].tileId] = newGraphics
                     } 
                 }
@@ -195,16 +189,14 @@ export function WigglePixiTrack() {
                 if (localXScale == null)
                     return;
 
-                let scaleModifier = (localXScale.domain()[1] - localXScale.domain()[0]) / (xScale.domain()[1] - xScale.domain()[0])
-                let newStart = localXScale.domain()[0]
-                let xWidth = xScale.domain()[1] - xScale.domain()[0]
+                let scaleModifier = (localXScale.domain()[1] - localXScale.domain()[0]) / (xScale.domain()[1] - xScale.domain()[0]);
+                let newStart = localXScale.domain()[0];
                 zoomedXScale = xScale.copy();
-                let zoomedLocalScale = localXScale.copy();
                 let newScale = scale * scaleModifier;
 
                 zoomedXScale.domain(xScale.range()
                                           .map(function(x) { return (x - translate[0]) / scale })
-                                          .map(xScale.invert))
+                                          .map(xScale.invert));
 
                 d.pMain.position.x =  zoomedXScale(newStart);
                 d.pMain.scale.x = newScale;
@@ -212,49 +204,49 @@ export function WigglePixiTrack() {
 
             sizeChanged();
         });
-    }
+    };
 
     chart.width = function(_) {
         if (!arguments.length) return width;
         else width = _;
         return chart;
-    }
+    };
 
     chart.height = function(_) {
         if (!arguments.length) return height;
         else height = _;
         return chart;
-    }
+    };
 
     chart.resizeDispatch = function(_) {
         if (!arguments.length) return resizeDispatch;
         else resizeDispatch = _;
         return chart;
-    }
+    };
 
     chart.xScale = function(_) {
         if (!arguments.length) return xScale;
         else xScale = _;
         return chart;
-    }
+    };
 
     chart.zoomDispatch = function(_) {
         if (!arguments.length) return zoomDispatch;
         else zoomDispatch = _;
         return chart;
-    }
+    };
 
     chart.pixiStage = function(_) {
         if (!arguments.length) return pixiStage;
         else pixiStage = _;
         return chart;
-    }
+    };
 
     chart.width = function(_) {
         if (!arguments.length) return width;
         else width = _;
         return chart;
-    }
+    };
 
     return chart;
 }

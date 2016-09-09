@@ -218,49 +218,49 @@ export function WigglePixiHeatmap() {
 
             sizeChanged();
         });
-    }
+    };
 
     chart.width = function(_) {
         if (!arguments.length) return width;
         else width = _;
         return chart;
-    }
+    };
 
     chart.height = function(_) {
         if (!arguments.length) return height;
         else height = _;
         return chart;
-    }
+    };
 
     chart.resizeDispatch = function(_) {
         if (!arguments.length) return resizeDispatch;
         else resizeDispatch = _;
         return chart;
-    }
+    };
 
     chart.xScale = function(_) {
         if (!arguments.length) return xScale;
         else xScale = _;
         return chart;
-    }
+    };
 
     chart.zoomDispatch = function(_) {
         if (!arguments.length) return zoomDispatch;
         else zoomDispatch = _;
         return chart;
-    }
+    };
 
     chart.pixiStage = function(_) {
         if (!arguments.length) return pixiStage;
         else pixiStage = _;
         return chart;
-    }
+    };
 
     chart.width = function(_) {
         if (!arguments.length) return width;
         else width = _;
         return chart;
-    }
+    };
 
     return chart;
 }
