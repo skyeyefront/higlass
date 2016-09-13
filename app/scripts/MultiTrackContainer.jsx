@@ -10,13 +10,14 @@ import {WigglePixiLine} from './WigglePixiLine.js';
 import {WigglePixiPoint} from './WigglePixiPoint.js';
 import {WigglePixiHeatmap} from './WigglePixiHeatmap.js';
 import {LeftWigglePixiTrack} from './LeftWigglePixiTrack.js';
-import {HeatmapRectangleTrack} from './HeatmapRectangleTrack.js'
-import {TopDiagonalHeatmapRectangleTrack} from './TopDiagonalHeatmapTrack.js'
-import {AddTrackDiv} from './AddTrackDiv.js'
-import {TopGeneLabelsTrack} from './TopGeneLabelsTrack.js'
-import {TopChromosomeAxis} from './TopChromosomeAxis.js'
-import {LeftChromosomeAxis} from './LeftChromosomeAxis.js'
-import {GenomePositionSearchBox} from './GenomePositionSearchBox.jsx'
+import {HeatmapRectangleTrack} from './HeatmapRectangleTrack.js';
+import {TopDiagonalHeatmapRectangleTrack} from './TopDiagonalHeatmapTrack.js';
+import {AddTrackDiv} from './AddTrackDiv.js';
+import {TopGeneLabelsTrack} from './TopGeneLabelsTrack.js';
+import {TopChromosomeAxis} from './TopChromosomeAxis.js';
+import {LeftChromosomeAxis} from './LeftChromosomeAxis.js';
+import {GenomePositionSearchBox} from './GenomePositionSearchBox.jsx';
+import {HeatmapTrackOptions} from './HeatmapTrackOptions.jsx';
 
 export class MultiTrackContainer extends React.Component {
     constructor(props) {
@@ -76,7 +77,9 @@ export class MultiTrackContainer extends React.Component {
             height: this.props.viewConfig.height,     // should change in response to the addition of new tracks
                             // or user resize
             tracks: trackDict,
-            tracksList: tracks
+            tracksList: tracks,
+
+            renderedOnce: false
         };
 
         this.animate = this.animate.bind(this);
@@ -116,6 +119,7 @@ export class MultiTrackContainer extends React.Component {
     }
 
     updateDimensions() {
+        console.log('updating dimensions', this.uid);
         let cs = window.getComputedStyle(this.element, null);
 
         this.prevWidth = this.width;
@@ -164,6 +168,8 @@ export class MultiTrackContainer extends React.Component {
 
         let currentTop = 0;
         let currentLeft = 0;
+
+        console.log('arrange width:', this.uid, this.width);
 
         for (let i = 0; i < this.state.tracksList.length; i++) {
             let trackId = this.state.tracksList[i].uid;
@@ -258,6 +264,15 @@ export class MultiTrackContainer extends React.Component {
             }
         }
 
+    }
+
+    componentWillMount() {
+        /*
+        this.element = ReactDOM.findDOMNode(this);
+        console.log('this.element:', this.element);
+        this.updateDimensions();
+        this.arrangeTracks();
+        */
     }
 
     componentDidMount() {
@@ -400,6 +415,7 @@ export class MultiTrackContainer extends React.Component {
             .resizeDispatch(this.resizeDispatch)
             .zoomDispatch(this.zoomDispatch);
 
+        console.log('before animate width:', this.width);
 
         this.animate();
         d3.select(this.bigDiv).call(this.zoom);
@@ -460,16 +476,20 @@ export class MultiTrackContainer extends React.Component {
             .ease('linear')
             .call(this.zoom.translate([-6091225.646378613, -6091157.500879494]).scale(14603.2311647761).event);
             */
+        if (!this.state.renderedOnce) {
+            // rerender so that all the tracks' widths are set
+            // because the dimensions of the enclosing div aren't determined until it
+            // has been rendered once
+            this.setState(
+                    {renderedOnce: true}
+                    )
+        }
     }
 
     initColorScale(colorScaleRange, colorScaleDomain = null) {
         let colorValues = colorScaleRange.map((x) => {
-            console.log('x', x, 'rgb:', d3.rgb(x));    
             return d3.rgb(x);
         });
-
-        console.log('colorScaleRange:', colorScaleRange);
-        console.log('colorValues:', colorValues);
 
         // go from a d3 linear scale to 0 - 256 array of rgba value
         let d3Scale = d3.scale.linear()
@@ -489,11 +509,9 @@ export class MultiTrackContainer extends React.Component {
             }
 
             domain.push(end);
-            console.log('domain:', domain);
         }
         d3Scale.domain(domain);
 
-        console.log('colorScaleRange:', colorScaleRange, d3Scale.domain(), d3Scale.range());
         let scaleArray = [];
         let colorArray = [255, 255, 255, 0];
         for (let i = 0; i < 256; i++) {
@@ -503,7 +521,6 @@ export class MultiTrackContainer extends React.Component {
         }
         scaleArray[255] = [255,255,255,0];
 
-        console.log('scaleArray:', scaleArray);
         return scaleArray;
     }
 
@@ -716,12 +733,26 @@ export class MultiTrackContainer extends React.Component {
                 <canvas ref={(c) => this.canvas = c} style={canvasStyle}/>
                 { trackList.map(function(track, i) 
                         {
+                            console.log('track.width:', this.uid, track.width);
+                            let trackOptions = '';
+                            if (track.options) {
+                                switch (track.type) {
+                                    case 'heatmap':
+                                    case 'top-diagonal-heatmap':
+                                        trackOptions = <HeatmapTrackOptions 
+                                            />
+                                }
+                            } else {
+                            }
                             return (
                                 <div 
-                                                 className={'track ' + this.trackDimension(track)}
-                                                 style={{left: track.left, top: track.top, position: 'absolute'}}
-                                                 key={track.uid}
-                                                 />
+                                className={'track ' + this.trackDimension(track)}
+                                style={{left: track.left, top: track.top, position: 'absolute', 
+                                        width: track.width, height: track.height}}
+                                key={track.uid}>
+                                    {trackOptions}
+                                
+                                </div>
                                 
                                                  /*
                                 <DraggableDiv 
