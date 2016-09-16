@@ -79,11 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-<<<<<<< HEAD
 	var rectangularOneWindow = JSON.parse('\n    [\n  {\n    "chromInfoPath": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n    "domain": [\n      0,\n      3000000000\n    ],\n    "viewStyle": {\n      "float": "left",\n      "padding": "5px",\n      "width": "100%"\n    },\n    "tracks": [\n      {\n        "source": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n        "type": "top-chromosome-axis",\n        "height": 25\n      },\n        {\n        "source": "//52.23.165.123:9872/hg19.1/Rao2014-GM12878-MboI-allreps-filtered.1kb.cool.reduced.genome.gz",\n        "type": "heatmap",\n        "height": 300\n      },\n      {\n        "source": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n        "type": "left-chromosome-axis",\n        "width": 25\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-plus",\n        "type": "left-gene-labels",\n        "width": 25\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-plus",\n        "type": "top-gene-labels",\n        "height": 25\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Pol2s2IggmusSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "top-line",\n        "height": 25\n      },\n      {\n        "type": "top-empty",\n        "height": 5\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Pol2s2IggmusSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "left-bar",\n        "width": 25\n      },\n      {\n        "type": "left-empty",\n        "width": 5\n      }\n\n    ],\n    "zoomLock" : 0\n  }\n]\n');
-=======
-	var rectangularOneWindow = JSON.parse('\n    [\n  {\n    "chromInfoPath": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n    "domain": [\n      0,\n      3000000000\n    ],\n    "viewStyle": {\n      "float": "left",\n      "padding": "5px",\n      "width": "100%"\n    },\n    "tracks": [\n      {\n        "source": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n        "type": "top-chromosome-axis",\n        "height": 25\n      },\n        {\n        "source": "//52.23.165.123:9872/hg19.1/Rao2014-GM12878-MboI-allreps-filtered.1kb.cool.reduced.genome.gz",\n        "type": "heatmap",\n        "height": 300\n      },\n      {\n        "source": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n        "type": "left-chromosome-axis",\n        "width": 25\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-plus",\n        "type": "top-gene-labels",\n        "height": 25\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Pol2s2IggmusSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "top-line",\n        "height": 25\n      },\n      {\n        "type": "top-empty",\n        "height": 5\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Pol2s2IggmusSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "left-bar",\n        "width": 25\n      },\n      {\n        "type": "left-empty",\n        "width": 5\n      }\n\n    ],\n    "zoomLock" : 0\n  }\n]\n');
->>>>>>> 3d1feea196f88be69a775731e979ebdb5b1b5a2d
 
 	try {
 	  _reactDom2.default.render(_react2.default.createElement(_HiGlassApp.HiGlassApp, { viewConfigString: JSON.stringify(rectangularOneWindow) }), document.getElementById('rectangular'));
@@ -99,7 +95,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	} catch (e) {
 	  console.log('Error:', e);
 	}
-<<<<<<< HEAD
 
 	var oneDOneWindow = JSON.parse('\n    [\n  {\n    "chromInfoPath": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n    "domain": [\n      0,\n      3000000000\n    ],\n    "viewStyle": {\n      "float": "left",\n      "padding": "5px",\n      "width": "100%"\n    },\n    "tracks": [\n      {\n        "source": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n        "type": "top-chromosome-axis"\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-plus",\n        "type": "top-gene-labels",\n        "height": 25\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-minus",\n        "type": "top-gene-labels",\n        "height": 25\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Pol2s2IggmusSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "top-line",\n        "height": 45\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/E116-DNase.fc.signal.bigwig.bedGraph.genome.sorted.gz",\n        "type": "top-line",\n        "height": 45\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Ctcfsc15914c20StdSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "top-bar",\n        "height": 45\n      }\n    ],\n    "zoomLock" : 0\n  }\n]\n');
 
@@ -110,18 +105,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	try {
-=======
-
-	var oneDOneWindow = JSON.parse('\n    [\n  {\n    "chromInfoPath": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n    "domain": [\n      0,\n      3000000000\n    ],\n    "viewStyle": {\n      "float": "left",\n      "padding": "5px",\n      "width": "100%"\n    },\n    "tracks": [\n      {\n        "source": "//s3.amazonaws.com/pkerp/data/hg19/chromInfo.txt",\n        "type": "top-chromosome-axis"\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-plus",\n        "type": "top-gene-labels",\n        "height": 25\n      },\n      {\n        "source": "//52.23.165.123:9872/hg19/refgene-tiles-minus",\n        "type": "top-gene-labels",\n        "height": 25\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Pol2s2IggmusSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "top-line",\n        "height": 45\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/E116-DNase.fc.signal.bigwig.bedGraph.genome.sorted.gz",\n        "type": "top-line",\n        "height": 45\n      },\n\n      {\n        "source": "//52.23.165.123:9872/hg19.1/wgEncodeSydhTfbsGm12878Ctcfsc15914c20StdSig.bigWig.bedGraph.genome.sorted.gz",\n        "type": "top-bar",\n        "height": 45\n      }\n    ],\n    "zoomLock" : 0\n  }\n]\n');
-
-	try {
-	  _reactDom2.default.render(_react2.default.createElement(_HiGlassApp.HiGlassApp, { viewConfigString: JSON.stringify(oneDOneWindow) }), document.getElementById('one-dimensional'));
-	} catch (e) {
-	  console.log('error:', e);
-	}
-
-	try {
->>>>>>> 3d1feea196f88be69a775731e979ebdb5b1b5a2d
 	  _reactDom2.default.render(_react2.default.createElement(_HiGlassApp.HiGlassApp, { viewConfigString: JSON.stringify(oneDOneWindow) }), document.getElementById('empty'));
 	} catch (e) {
 	  console.log('error:', e);
@@ -238,6 +221,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	// shim for using process in browser
 
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -262,7 +270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -279,7 +287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -291,7 +299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 
@@ -24226,10 +24234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'top-heatmap': 'top',
 	            'top-diagonal-heatmap': 'top',
 	            'top-gene-labels': 'top',
-<<<<<<< HEAD
 	            'left-gene-labels': 'left',
-=======
->>>>>>> 3d1feea196f88be69a775731e979ebdb5b1b5a2d
 	            'top-chromosome-axis': 'top',
 	            'left-chromosome-axis': 'left',
 	            'left-empty': 'left',
@@ -24489,11 +24494,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var diagonalHeatmapTrack = (0, _TopDiagonalHeatmapTrack.TopDiagonalHeatmapRectangleTrack)().xScale(this.xScale.copy()).yScale(this.yScale.copy()).width(this.width).height(this.height).pixiStage(this.stage).resizeDispatch(this.resizeDispatch).zoomDispatch(this.zoomDispatch);
 
 	            var topGeneLabels = (0, _TopGeneLabelsTrack.TopGeneLabelsTrack)().xScale(this.xOrigScale.copy()).width(this.width).pixiStage(this.stage).resizeDispatch(this.resizeDispatch).zoomDispatch(this.zoomDispatch);
-<<<<<<< HEAD
 
 	            var leftGeneLabels = (0, _LeftGeneLabelsTrack.LeftGeneLabelsTrack)().yScale(this.yOrigScale.copy()).width(this.width).pixiStage(this.stage).resizeDispatch(this.resizeDispatch).zoomDispatch(this.zoomDispatch);
-=======
->>>>>>> 3d1feea196f88be69a775731e979ebdb5b1b5a2d
 
 	            this.animate();
 	            _d2.default.select(this.bigDiv).call(this.zoom);
@@ -48210,6 +48212,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // notify of start
 	    this.emit('start', this);
 
+	    // update loading state
+	    this.loading = true;
+
 	    // start the internal queue
 	    for (var i = 0; i < this._buffer.length; ++i) {
 	        this._queue.push(this._buffer[i]);
@@ -48246,6 +48251,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @private
 	 */
 	Loader.prototype._onComplete = function () {
+	    this.loading = false;
+
 	    this.emit('complete', this, this.resources);
 	};
 
@@ -48258,15 +48265,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @private
 	 */
 	Loader.prototype._onLoad = function (resource) {
-	    this.progress += this._progressChunk;
-
-	    this.emit('progress', this, resource);
-
 	    // run middleware, this *must* happen before dequeue so sub-assets get added properly
 	    this._runMiddleware(resource, this._afterMiddleware, function () {
 	        resource.emit('afterMiddleware', resource);
 
 	        this._numToLoad--;
+	        
+	        this.progress += this._progressChunk;
+	        this.emit('progress', this, resource);
 
 	        if (resource.error) {
 	            this.emit('error', resource.error, this, resource);

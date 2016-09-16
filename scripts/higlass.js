@@ -480,9 +480,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                } else {
 	                    sprite.x = xOrigScale(tileX);
 	                    sprite.y = yOrigScale(tileY);
-
-	                    console.log('sprite.x:', sprite.x);
-	                    console.log('sprite.y:', sprite.y);
 	                }
 	            }
 
@@ -44961,6 +44958,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	// shim for using process in browser
 
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -44985,7 +45007,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -45002,7 +45024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -45014,7 +45036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 
@@ -64792,6 +64814,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // notify of start
 	    this.emit('start', this);
 
+	    // update loading state
+	    this.loading = true;
+
 	    // start the internal queue
 	    for (var i = 0; i < this._buffer.length; ++i) {
 	        this._queue.push(this._buffer[i]);
@@ -64828,6 +64853,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @private
 	 */
 	Loader.prototype._onComplete = function () {
+	    this.loading = false;
+
 	    this.emit('complete', this, this.resources);
 	};
 
@@ -64840,15 +64867,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @private
 	 */
 	Loader.prototype._onLoad = function (resource) {
-	    this.progress += this._progressChunk;
-
-	    this.emit('progress', this, resource);
-
 	    // run middleware, this *must* happen before dequeue so sub-assets get added properly
 	    this._runMiddleware(resource, this._afterMiddleware, function () {
 	        resource.emit('afterMiddleware', resource);
 
 	        this._numToLoad--;
+	        
+	        this.progress += this._progressChunk;
+	        this.emit('progress', this, resource);
 
 	        if (resource.error) {
 	            this.emit('error', resource.error, this, resource);
