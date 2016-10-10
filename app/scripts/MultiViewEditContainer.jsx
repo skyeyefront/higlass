@@ -22,14 +22,7 @@ export class MultiViewEditContainer extends React.Component {
         let divStyle = {float: 'left', width: '100%'};
         return (
             <div style={divStyle} className="MultiViewEditContainer">
-                { this.props.viewConfig.object.views.map(function(view, i) 
-                    {
-                    return (<MultiTrackEditContainer
-                        viewConfig ={view}
-                        key={slugid.nice()}
-                        />)
-                    })
-                }
+            { this.props.children }
             </div>
         );
     }

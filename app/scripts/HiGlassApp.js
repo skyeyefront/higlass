@@ -3,8 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import slugid from 'slugid';
 import {MultiViewContainer} from './MultiViewContainer.jsx';
+import {MultiViewEditContainer} from './MultiViewEditContainer.jsx';
 import {MultiTrackContainer} from './MultiTrackContainer.jsx';
-import {MultiTrackEditContainer} from './MultiTrackContainer.jsx';
+import {MultiTrackEditContainer} from './MultiTrackEditContainer.jsx';
 import {HiGlassInput} from './HiGlassInput.jsx';
 import {Button, Panel, FormGroup, ControlLabel, FormControl, SafeAnchor} from 'react-bootstrap';
 
@@ -21,6 +22,7 @@ export class HiGlassApp extends React.Component {
             object: JSON.parse(this.props.viewConfigString),
             text: JSON.stringify(JSON.parse(this.props.viewConfigString))
         },
+        updateUid: slugid.nice(),
         inputOpen: false
     }
 
@@ -72,6 +74,13 @@ export class HiGlassApp extends React.Component {
 
     }
 
+    dimensionsUpdated(updateUid) {
+        //some dimensions were updated in a MultiTrackContainer, that means that we need
+        // to update the edit container
+        console.log('dimensions updated viewConfig:', updateUid);
+        this.setState({ updateUid: updateUid });
+    }
+
     render() {
         /*
         let divStyle = {"paddingLeft": "20px",
@@ -81,12 +90,6 @@ export class HiGlassApp extends React.Component {
 
         let toolbarStyle = {"position": "relative",
                        "top": "-1px"};
-                    /*
-                    <MultiViewEditContainer viewConfig={this.state.viewConfig}
-                    handleEdit={this.handleViewEdit.bind(this)}
-                    visible={this.state.inputOpen}
-                        />
-                        */
 
         return (
                 <div style={divStyle}>
@@ -95,17 +98,40 @@ export class HiGlassApp extends React.Component {
                     ref='displayPanel'
                     className="higlass-display"
                     >
+                    <div style={{'position': 'relative'}}>
+                    <div style={{}}>
                     <MultiViewContainer viewConfig={this.state.viewConfig} >
                     { 
                         this.state.viewConfig.object.views.map(function(view, i) 
-                                                             {
-                                                                 return (<MultiTrackContainer
-                                                                         viewConfig ={view}
-                                                                         key={slugid.nice()}
-                                                                         />)
-                                                             })
+                                         {
+                                             return (<MultiTrackContainer
+                                                     viewConfig ={view}
+                                                     key={slugid.nice()}
+                                                     dimensionsUpdated={this.dimensionsUpdated.bind(this)}
+                                                     />)
+                                         }.bind(this))
                     }
                     </MultiViewContainer>
+                    </div>
+                    <div style={{'position': 'absolute', 'left': 0, 'top': 0, 
+                        'visibility': this.state.inputOpen ? 'visible' : 'hidden'}}>
+                    <MultiViewEditContainer viewConfig={this.state.viewConfig}
+                    handleEdit={this.handleViewEdit.bind(this)}
+                    updateUid={this.state.updateUid}
+                    visible={this.state.inputOpen}>
+                    { this.state.viewConfig.object.views.map(function(view, i) 
+                                         {
+                                             return (<MultiTrackEditContainer
+                                                     viewConfig ={view}
+                                                     key={slugid.nice()}
+                                                     updateUid={this.state.updateUid}
+                                                     />)
+                                         }.bind(this))
+                    }
+
+                        </MultiViewEditContainer>
+                        </div>
+                        </div>
 
                 </Panel>
                 { (() => { if (this.state.viewConfig.object.editable) {

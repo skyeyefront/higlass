@@ -216,9 +216,14 @@ export class MultiTrackContainer extends React.Component {
                 this.state.tracks[uid].resizeDispatch.resize();
             }
         }
+
+        this.props.viewConfig.width = this.width;
+        this.props.viewConfig.height = this.height;
+
         // change out all the scales and then call everything again
         this.handleZoom();
-        
+
+        this.props.dimensionsUpdated(this.state.tracks);
     }
 
     arrangeTracks() {

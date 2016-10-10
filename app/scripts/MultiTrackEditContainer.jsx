@@ -1,3 +1,4 @@
+import '../styles/MultiTrackEditContainer.css';
 import React from 'react';
 import slugid from 'slugid';
 import ReactDOM from 'react-dom';
@@ -5,6 +6,7 @@ import ReactDOM from 'react-dom';
 export class MultiTrackEditContainer extends React.Component {
     constructor(props) {
         super(props);
+
     }
 
     componentWillReceiveProps(newProps) {
@@ -18,7 +20,9 @@ export class MultiTrackEditContainer extends React.Component {
     render() {
         let searchDivStyle = {};
         let divStyle = { position: 'relative',
-                         className: 'big-div' }
+                         className: 'big-div',
+                         width: this.props.viewConfig.width,
+                         height: this.props.viewConfig.height }
 
         let viewStyle = this.props.viewConfig.viewStyle;
 
@@ -36,7 +40,7 @@ export class MultiTrackEditContainer extends React.Component {
                          width: '100%'
         }
 
-        let trackList = this.state.tracksList;
+        let trackList = this.props.viewConfig.tracks;
 
         //<img src="images/plus.svg" width="20px" style={imgStyle}/>
         /*
@@ -63,12 +67,12 @@ export class MultiTrackEditContainer extends React.Component {
                     }})() }
             </div>
             <div style={divStyle} ref={(c) => this.bigDiv = c} >
-                <canvas ref={(c) => this.canvas = c} style={canvasStyle}/>
                 { trackList.map(function(track, i) 
                         {
+                            console.log('track.width:', track.width, track);
                             return (
                                 <div 
-                                                 className={'track ' + this.trackDimension(track)}
+                                                 className={'edit-track'}
                                                  style={{left: track.left, 
                                                          top: track.top, 
                                                          width: track.width,
